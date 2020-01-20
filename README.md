@@ -39,11 +39,12 @@ $ berglas grant ${BUCKET_ID}/github-token --member serviceAccount:${SERVICE_ACCO
 $ berglas grant ${BUCKET_ID}/slack-token --member serviceAccount:${SERVICE_ACCOUNT_EMAIL}
 $ berglas grant ${BUCKET_ID}/slack-channel-id --member serviceAccount:${SERVICE_ACCOUNT_EMAIL}
 $ SERVICE=stardust
+$ USERNAME=micnncim
 $ gcloud run deploy $SERVICE \
     --project $PROJECT_ID \
     --platform managed \
     --image micnncim/stardust:latest \
-    --set-env-vars "API_KEY=berglas://${BUCKET_ID}/api-key,TLS_KEY=berglas://${BUCKET_ID}/tls-key?destination=tempfile" \
+    --set-env-vars GITHUB_TOKEN=berglas://stardust-secrets/github-token,GITHUB_USERNAME=${USERNAME},ENABLE_SLACK=true,SLACK_TOKEN=berglas://stardust-secrets/slack-token,SLACK_CHANNEL_ID=berglas://stardust-secrets/slack-channel-id,INTERVAL=168h \
     --service-account ${SERVICE_ACCOUNT_EMAIL}
 ```
 
