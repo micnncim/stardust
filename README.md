@@ -44,7 +44,7 @@ $ gcloud run deploy $SERVICE \
     --project $PROJECT_ID \
     --platform managed \
     --image micnncim/stardust:latest \
-    --set-env-vars GITHUB_TOKEN=berglas://stardust-secrets/github-token,GITHUB_USERNAME=${USERNAME},ENABLE_SLACK=true,SLACK_TOKEN=berglas://stardust-secrets/slack-token,SLACK_CHANNEL_ID=berglas://stardust-secrets/slack-channel-id,INTERVAL=168h \
+    --set-env-vars GITHUB_TOKEN=berglas://${BUCKET_ID}/github-token,GITHUB_USERNAME=${USERNAME},ENABLE_SLACK=true,SLACK_TOKEN=berglas://${BUCKET_ID}/slack-token,SLACK_CHANNEL_ID=berglas://${BUCKET_ID}/slack-channel-id,INTERVAL=168h \
     --service-account ${SERVICE_ACCOUNT_EMAIL}
 ```
 
@@ -59,7 +59,7 @@ $ gcloud run services add-iam-policy-binding $SERVICE \
     --member=serviceAccount:${SERVICE_ACCOUNT}@{PROJECT_ID}.iam.gserviceaccount.com \
     --role=roles/run.invoker
 $ SERVICE_ACCOUNT_EMAIL=${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
-$ SERVICE_URL=$(gcloud run services describe stardust --format 'value(status.url)')
+$ SERVICE_URL=$(gcloud run services describe $SERVICE --format 'value(status.url)')
 $ JOB=my-job
 $ CRON="0 9 * * 0"
 $ gcloud beta scheduler jobs create http $JOB --schedule $CRON
