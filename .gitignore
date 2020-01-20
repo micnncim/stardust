@@ -1,0 +1,12 @@
+.envrc
+
+**/.terraform/*
+
+*.tfstate
+*.tfstate.*
+
+*.tfvars
+
+secrets/
+
+*.zip
