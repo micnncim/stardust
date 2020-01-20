@@ -58,6 +58,7 @@ func NewClient(token, channelID string, logger *zap.Logger) (reporter.Reporter, 
 }
 
 func (c *Client) Report(ctx context.Context, repos []*github.Repo) error {
+	repoSum := len(repos)
 	var count int // the number of messages already sent
 	for {
 		if len(repos) == 0 {
@@ -72,7 +73,7 @@ func (c *Client) Report(ctx context.Context, repos []*github.Repo) error {
 		attachments := make([]slack.Attachment, 0, len(repos))
 		for i, repo := range repos {
 			sent := maxAttachments * count
-			title := fmt.Sprintf("%s (%d/%d)", attachmentTitle, i+1+sent, len(repos)+sent)
+			title := fmt.Sprintf("%s (%d/%d)", attachmentTitle, i+1+sent, repoSum)
 			attachments = append(attachments, makeSlackAttachment(title, repo))
 		}
 
