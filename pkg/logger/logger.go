@@ -17,7 +17,7 @@ func New(level string) (*zap.Logger, error) {
 
 	c := zapdriver.NewProductionConfig()
 	c.Level = zap.NewAtomicLevelAt(l)
-	return c.Build()
+	return c.Build(zapdriver.WrapCore())
 }
 
 func parseLogLevel(levelStr string) (zapcore.Level, error) {
