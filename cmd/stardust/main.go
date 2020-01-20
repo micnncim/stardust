@@ -7,6 +7,8 @@ import (
 	"os"
 	"time"
 
+	_ "github.com/GoogleCloudPlatform/berglas/pkg/auto"
+
 	"github.com/micnncim/stardust/pkg/app"
 	"github.com/micnncim/stardust/pkg/config"
 	"github.com/micnncim/stardust/pkg/github"
