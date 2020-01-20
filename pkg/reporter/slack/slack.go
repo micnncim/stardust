@@ -5,11 +5,11 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/micnncim/stardust/pkg/github"
-	"github.com/micnncim/stardust/pkg/reporter"
-
 	"github.com/nlopes/slack"
 	"go.uber.org/zap"
+
+	"github.com/micnncim/stardust/pkg/github"
+	"github.com/micnncim/stardust/pkg/reporter"
 )
 
 const (
