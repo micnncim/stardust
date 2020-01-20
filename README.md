@@ -1,5 +1,6 @@
 # stardust
 
+![](https://github.com/micnncim/stardust/workflows/Test/badge.svg)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
 Report a summary what GitHub repositories you recently have starred.
