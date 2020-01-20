@@ -1,0 +1,31 @@
+{
+    "name": "stardust",
+    "env": {
+        "GITHUB_TOKEN": {
+            "description": "GitHub access token",
+            "required": true
+        },
+        "`GITHUB_USERNAME": {
+            "description": "GitHub username who put stars on repositories",
+            "required": true
+        },
+        "`ENABLE_SLACK": {
+            "description": "Whether Slack report is enabled or not",
+            "value": true
+        },
+        "`SLACK_TOKEN": {
+            "description": "Slack access token"
+        },
+        "`LOG_LEVEL": {
+            "description": "Log level for internal logging",
+            "value": "info"
+        },
+        "`INTERVAL": {
+            "description": "Interval of starred",
+            "value": "168h"
+        }
+    },
+    "options": {
+        "allow-unauthenticated": false
+    }
+}
