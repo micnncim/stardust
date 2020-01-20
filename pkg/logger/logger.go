@@ -3,8 +3,8 @@ package logger
 import (
 	"fmt"
 	"strings"
-	"time"
 
+	"github.com/blendle/zapdriver"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -15,38 +15,9 @@ func New(level string) (*zap.Logger, error) {
 		return nil, err
 	}
 
-	c := zap.Config{
-		Level:             zap.NewAtomicLevelAt(l),
-		Development:       false,
-		DisableCaller:     false,
-		DisableStacktrace: false,
-		Sampling: &zap.SamplingConfig{
-			Initial:    100,
-			Thereafter: 100,
-		},
-		Encoding: "json",
-		EncoderConfig: zapcore.EncoderConfig{
-			MessageKey:     "message",
-			LevelKey:       "level",
-			TimeKey:        "time",
-			NameKey:        "logger",
-			CallerKey:      "caller",
-			StacktraceKey:  "stacktrace",
-			LineEnding:     zapcore.DefaultLineEnding,
-			EncodeLevel:    zapcore.LowercaseLevelEncoder,
-			EncodeTime:     logTimeEncoder,
-			EncodeDuration: zapcore.SecondsDurationEncoder,
-			EncodeCaller:   zapcore.ShortCallerEncoder,
-		},
-		OutputPaths:      []string{"stdout"},
-		ErrorOutputPaths: []string{"stderr"},
-	}
-
+	c := zapdriver.NewProductionConfig()
+	c.Level = zap.NewAtomicLevelAt(l)
 	return c.Build()
-}
-
-func logTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
-	enc.AppendString(t.Format("2006-01-02T15:04:05"))
 }
 
 func parseLogLevel(levelStr string) (zapcore.Level, error) {
