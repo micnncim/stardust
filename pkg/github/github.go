@@ -50,7 +50,7 @@ func (c *Client) ListStarredRepos(ctx context.Context, username string, from tim
 	c.logger.Info("started fetching starred repositories", zap.String("username", username))
 
 	var srepos []*github.StarredRepository
-	opt := github.ListOptions{PerPage: 10}
+	opt := github.ListOptions{PerPage: 50}
 
 	for {
 		repos, resp, err := c.client.Activity.ListStarred(ctx, username, &github.ActivityListStarredOptions{
