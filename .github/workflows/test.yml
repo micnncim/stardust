@@ -17,13 +17,13 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Cache Go Modules
-          id: cache
-          uses: actions/cache@v1
-          with:
-            path: ~/go/pkg/mod
-            key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-            restore-keys: |
-              ${{ runner.os }}-go-
+        id: cache
+        uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
 
       - name: Download Go Modules
         if: steps.cache.outputs.cache-hit != 'true'
