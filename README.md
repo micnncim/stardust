@@ -3,6 +3,8 @@
 ![](https://github.com/micnncim/stardust/workflows/Test/badge.svg)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
+[![dockeri.co](https://dockeri.co/image/micnncim/stardust)](https://hub.docker.com/r/micnncim/stardust)
+
 Report a summary what GitHub repositories you recently have starred.
 
 ![screenshot](docs/assets/screenshot.png)
@@ -13,17 +15,69 @@ For example, you can get a report about what repositories you have starred in th
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/micnncim/stardust.git)
 
+Using it with Cloud Scheduler and [Berglas](https://github.com/GoogleCloudPlatform/berglas) is recommended.
+
 Before push the above button, you need to set up the `app.json`.
 The example is [app.example.json](app.example.json).
 The detailed document is [here](https://github.com/GoogleCloudPlatform/cloud-run-button#customizing-deployment-parameters).
 
-Using it with Cloud Scheduler is recommended.
+### CLI
+
+1. Deploy stardust to Cloud Run
+
+```
+$ PROJECT_ID=my-project
+$ BUCKET_ID=my-bucket
+$ KMS_KEY=projects/${PROJECT_ID}/locations/global/keyRings/berglas/cryptoKeys/berglas-key
+$ berglas create ${BUCKET_ID}/github-token "<GITHUB_TOKEN>" --key $KMS_KEY
+$ berglas create ${BUCKET_ID}/slack-token "<SLACK_TOKEN>" --key $KMS_KEY
+$ berglas create ${BUCKET_ID}/slack-channel-id "<SLACK_CHANNEL_ID>" --key $KMS_KEY
+$ SERVICE_ACCOUNT=my-service-account
+$ gcloud iam service-accounts create $SERVICE_ACCOUNT --project $PROJECT_ID
+$ SERVICE_ACCOUNT_EMAIL=${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
+$ berglas grant ${BUCKET_ID}/github-token --member serviceAccount:${SERVICE_ACCOUNT_EMAIL}
+$ berglas grant ${BUCKET_ID}/slack-token --member serviceAccount:${SERVICE_ACCOUNT_EMAIL}
+$ berglas grant ${BUCKET_ID}/slack-channel-id --member serviceAccount:${SERVICE_ACCOUNT_EMAIL}
+$ SERVICE=stardust
+$ gcloud run deploy $SERVICE \
+    --project $PROJECT_ID \
+    --platform managed \
+    --image micnncim/stardust:latest \
+    --set-env-vars "API_KEY=berglas://${BUCKET_ID}/api-key,TLS_KEY=berglas://${BUCKET_ID}/tls-key?destination=tempfile" \
+    --service-account ${SERVICE_ACCOUNT_EMAIL}
+```
+
+2. Set up Cloud Scheduler
+
+```
+$ SERVICE_ACCOUNT=my-service-account
+$ gcloud iam service-accounts create $SERVICE_ACCOUNT \
+    --display-name "<DISPLAYED_SERVICE_ACCOUNT_NAME>"
+$ SERVICE=stardust
+$ gcloud run services add-iam-policy-binding $SERVICE \
+    --member=serviceAccount:${SERVICE_ACCOUNT}@{PROJECT_ID}.iam.gserviceaccount.com \
+    --role=roles/run.invoker
+$ SERVICE_ACCOUNT_EMAIL=${SERVICE_ACCOUNT}@${PROJECT_ID}.iam.gserviceaccount.com
+$ SERVICE_URL=$(gcloud run services describe stardust --format 'value(status.url)')
+$ JOB=my-job
+$ CRON="0 9 * * 0"
+$ gcloud beta scheduler jobs create http $JOB --schedule $CRON
+    --http-method GET \
+    --uri $SERVICE_URL \
+    --oidc-service-account-email $SERVICE_ACCOUNT_EMAIL   \
+    --oidc-token-audience $SERVICE_URL
+```
 
 ## Report Platforms
 
 The supported report platforms are below.
 
 - Slack
+
+## Reference
+
+- [Running services on a schedule | Cloud Run Documentation | Google Cloud](https://cloud.google.com/run/docs/triggering/using-scheduler)
+- [Berglas Cloud Run Example - Go](https://github.com/GoogleCloudPlatform/berglas/blob/master/examples/cloudrun/go/README.md)
 
 ## License
 
