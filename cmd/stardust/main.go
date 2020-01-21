@@ -17,8 +17,6 @@ import (
 	"github.com/micnncim/stardust/pkg/reporter/slack"
 )
 
-const defaultLogLevel = "info"
-
 func main() {
 	http.HandleFunc("/", handler)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
@@ -42,11 +40,7 @@ func run(ctx context.Context) error {
 		return err
 	}
 
-	lvl := defaultLogLevel
-	if l := cfg.LogLevel; l != "" {
-		lvl = l
-	}
-	log, err := logger.New(lvl)
+	log, err := logger.New(cfg.LogLevel)
 	if err != nil {
 		return err
 	}
