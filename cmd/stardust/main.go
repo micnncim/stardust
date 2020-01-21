@@ -2,14 +2,14 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"net/http"
 	"os"
 	"time"
 
-	_ "github.com/GoogleCloudPlatform/berglas/pkg/auto"
-
 	"github.com/micnncim/stardust/pkg/app"
+	"github.com/micnncim/stardust/pkg/berglas"
 	"github.com/micnncim/stardust/pkg/config"
 	"github.com/micnncim/stardust/pkg/github"
 	"github.com/micnncim/stardust/pkg/logger"
@@ -17,7 +17,20 @@ import (
 	"github.com/micnncim/stardust/pkg/reporter/slack"
 )
 
+var (
+	local = flag.Bool("local", false, "run app locally")
+)
+
 func main() {
+	flag.Parse()
+
+	if !*local {
+		if err := resolveBerglasEnvs(); err != nil {
+			fmt.Fprint(os.Stderr, err)
+			os.Exit(1)
+		}
+	}
+
 	http.HandleFunc("/", handler)
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Fprint(os.Stderr, err)
@@ -61,4 +74,18 @@ func run(ctx context.Context) error {
 
 	a := app.New(cfg, gitHubClient, reporters, log)
 	return a.Run(ctx)
+}
+
+func resolveBerglasEnvs() error {
+	l, err := logger.New("info")
+	if err != nil {
+		return err
+	}
+	ctx := context.Background()
+	b, err := berglas.NewClient(ctx, l)
+	if err != nil {
+		return err
+	}
+	b.Resolve(ctx)
+	return nil
 }
