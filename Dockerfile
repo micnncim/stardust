@@ -1,13 +1,11 @@
-FROM golang:1.13 as build-env
+FROM golang:1.13 as builder
 
-WORKDIR /go/src/app
-ADD . /go/src/app
+WORKDIR /src
+COPY . .
 
-RUN go get -d -v ./...
-
-RUN go build -o /go/bin/app cmd/stardust/main.go
+RUN go build -o /bin/stardust cmd/stardust/main.go
 
 FROM gcr.io/distroless/base
-COPY --from=build-env /go/bin/app /
+COPY --from=builder /bin/stardust /bin/stardust
 
-CMD ["/app"]
+ENTRYPOINT ["/bin/stardust"]
