@@ -11,6 +11,13 @@ Report a summary what GitHub repositories you recently have starred.
 
 For example, you can get a report about what repositories you have starred in the week on every Sunday.
 
+## Run locally
+
+```
+$ docker run -d -p 8080:8080 --env-file env micnncim/stardust:latest -local
+$ curl localhost:8080
+```
+
 ## Run on Cloud Run
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/micnncim/stardust.git)
@@ -74,10 +81,6 @@ $ gcloud beta scheduler jobs create http $JOB --schedule $CRON
 The supported report platforms are below.
 
 - Slack
-
-## TODO
-
-- Support running stardust locally (currently unavailable because of Berglas auto resolution)
 
 ## Reference
 
