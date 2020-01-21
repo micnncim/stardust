@@ -18,7 +18,9 @@ const (
 	githubColor = "#24292E"
 
 	attachmentTitle = "GitHub Star Report"
+)
 
+var (
 	// Slack API limits the number of attachments.
 	// https://api.slack.com/methods/chat.postMessage
 	maxAttachments = 100
