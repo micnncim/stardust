@@ -23,7 +23,7 @@ func New(config *config.Config, githubClient *github.Client, reporters []reporte
 		config:       config,
 		githubClient: githubClient,
 		reporters:    reporters,
-		logger:       logger,
+		logger:       logger.Named("app"),
 	}
 }
 
