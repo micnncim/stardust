@@ -75,6 +75,10 @@ The supported report platforms are below.
 
 - Slack
 
+## TODO
+
+- Support running stardust locally (currently unavailable because of Berglas auto resolution)
+
 ## Reference
 
 - [Running services on a schedule | Cloud Run Documentation | Google Cloud](https://cloud.google.com/run/docs/triggering/using-scheduler)
