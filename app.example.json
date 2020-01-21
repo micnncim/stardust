@@ -16,6 +16,9 @@
         "`SLACK_TOKEN": {
             "description": "Slack access token"
         },
+        "`SLACK_CHANNEL_ID": {
+            "description": "Slack channel id"
+        },
         "`LOG_LEVEL": {
             "description": "Log level for internal logging",
             "value": "info"
