@@ -14,9 +14,9 @@ type Config struct {
 	SlackToken     string `envconfig:"SLACK_TOKEN"`
 	SlackChannelID string `envconfig:"SLACK_CHANNEL_ID"`
 
-	LogLevel string `envconfig:"LOG_LEVEL"`
+	LogLevel string `envconfig:"LOG_LEVEL" default:"info"`
 
-	Interval time.Duration `envconfig:"INTERVAL"`
+	Interval time.Duration `envconfig:"INTERVAL" default:"168h"`
 }
 
 func New() (*Config, error) {
