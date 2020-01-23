@@ -38,9 +38,11 @@ func (a *App) Run(ctx context.Context) error {
 	}
 
 	for _, r := range a.reporters {
-		if err := r.Report(ctx, repos); err != nil {
-			a.logger.Error("report failed", zap.Error(err))
-		}
+		go func(r reporter.Reporter) {
+			if err := r.Report(ctx, repos); err != nil {
+				a.logger.Error("report failed", zap.Error(err))
+			}
+		}(r)
 	}
 
 	return nil
