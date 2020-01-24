@@ -17,9 +17,7 @@ import (
 	"github.com/micnncim/stardust/pkg/reporter/slack"
 )
 
-var (
-	local = flag.Bool("local", false, "run app locally")
-)
+var local = flag.Bool("local", false, "run app locally")
 
 func main() {
 	flag.Parse()

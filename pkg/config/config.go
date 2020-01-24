@@ -25,5 +25,6 @@ func New() (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return c, nil
 }
