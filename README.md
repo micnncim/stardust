@@ -3,7 +3,11 @@
 ![](https://github.com/micnncim/stardust/workflows/Test/badge.svg)
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
 
-[![dockeri.co](https://dockeri.co/image/micnncim/stardust)](https://hub.docker.com/r/micnncim/stardust)
+<div>
+<a href="https://hub.docker.com/r/micnncim/stardust" target="_blank">
+<img src="https://raw.githubusercontent.com/micnncim/assets/master/images/badge-try-docker-image.png" alt="docker hub" width="250px" />
+</a>
+</div>
 
 Report a summary what GitHub repositories you recently have starred.
 
