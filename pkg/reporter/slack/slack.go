@@ -20,11 +20,9 @@ const (
 	attachmentTitle = "GitHub Star Report"
 )
 
-var (
-	// Slack API limits the number of attachments.
-	// https://api.slack.com/methods/chat.postMessage
-	maxAttachments = 100
-)
+// Slack API limits the number of attachments.
+// https://api.slack.com/methods/chat.postMessage
+var maxAttachments = 100
 
 type Client struct {
 	client    slackClientInterface
