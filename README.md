@@ -25,6 +25,7 @@ $ curl localhost:8080
 ## Run on Cloud Run
 
 [![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run/?git_repo=https://github.com/micnncim/stardust.git)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmicnncim%2Fstardust.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmicnncim%2Fstardust?ref=badge_shield)
 
 Using it with Cloud Scheduler and [Berglas](https://github.com/GoogleCloudPlatform/berglas) is recommended.
 
@@ -94,3 +95,6 @@ The supported report platforms are below.
 ## License
 
 [MIT](LICENSE)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmicnncim%2Fstardust.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmicnncim%2Fstardust?ref=badge_large)
