@@ -94,7 +94,7 @@ The supported report platforms are below.
 [release]: https://github.com/micnncim/stardust/releases
 [license]: LICENSE
 
-[actions-workflow-test-badge]: https://img.shields.io/github/workflow/status/micnncim/assets/Test?label=Test&style=for-the-badge&logo=github
-[docker-build-badge]: https://img.shields.io/docker/build/micnncim/assets?logo=docker&style=for-the-badge
-[release-badge]: https://img.shields.io/github/v/release/micnncim/assets?style=for-the-badge
-[license-badge]: https://img.shields.io/github/license/micnncim/assets?style=for-the-badge
+[actions-workflow-test-badge]: https://img.shields.io/github/workflow/status/micnncim/stardust/Test?label=Test&style=for-the-badge&logo=github
+[docker-build-badge]: https://img.shields.io/docker/cloud/build/micnncim/stardust?logo=docker&style=for-the-badge
+[release-badge]: https://img.shields.io/github/v/release/micnncim/stardust?style=for-the-badge
+[license-badge]: https://img.shields.io/github/license/micnncim/stardust?style=for-the-badge
