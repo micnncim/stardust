@@ -1,13 +1,9 @@
 # stardust
 
-![](https://github.com/micnncim/stardust/workflows/Test/badge.svg)
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-
-<div>
-<a href="https://hub.docker.com/r/micnncim/stardust" target="_blank">
-<img src="https://raw.githubusercontent.com/micnncim/assets/master/images/badge-try-docker-image.png" alt="docker hub" width="250px" />
-</a>
-</div>
+![[actions-workflow-test][actions-workflow-test-badge]][actions-workflow-test]
+![[docker-build][docker-build-badge]][docker-build]
+![[release][release-badge]][release]
+![[license][license-badge]][license]
 
 Report a summary what GitHub repositories you recently have starred.
 
@@ -91,6 +87,14 @@ The supported report platforms are below.
 - [Running services on a schedule | Cloud Run Documentation | Google Cloud](https://cloud.google.com/run/docs/triggering/using-scheduler)
 - [Berglas Cloud Run Example - Go](https://github.com/GoogleCloudPlatform/berglas/blob/master/examples/cloudrun/go/README.md)
 
-## License
+<!-- badge links -->
 
-[MIT](LICENSE)
+[actions-workflow-test]: https://github.com/micnncim/stardust/actions?query=workflow%3ATest
+[docker-build]: https://hub.docker.com/r/micnncim/stardust
+[release]: https://github.com/micnncim/stardust/releases
+[license]: LICENSE
+
+[actions-workflow-test-badge]: https://img.shields.io/github/workflow/status/micnncim/assets/Test?label=Test&style=for-the-badge&logo=github
+[docker-build-badge]: https://img.shields.io/docker/build/micnncim/assets?logo=docker&style=for-the-badge
+[release-badge]: https://img.shields.io/github/v/release/micnncim/assets?style=for-the-badge
+[license-badge]: https://img.shields.io/github/license/micnncim/assets?style=for-the-badge
