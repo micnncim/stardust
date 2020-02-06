@@ -1,9 +1,9 @@
 # stardust
 
-![[actions-workflow-test][actions-workflow-test-badge]][actions-workflow-test]
-![[docker-build][docker-build-badge]][docker-build]
-![[release][release-badge]][release]
-![[license][license-badge]][license]
+[![actions-workflow-test][actions-workflow-test-badge]][actions-workflow-test]
+[![docker-build][docker-build-badge]][docker-build]
+[![release][release-badge]][release]
+[![license][license-badge]][license]
 
 Report a summary what GitHub repositories you recently have starred.
 
