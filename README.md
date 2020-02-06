@@ -96,5 +96,5 @@ The supported report platforms are below.
 
 [actions-workflow-test-badge]: https://img.shields.io/github/workflow/status/micnncim/stardust/Test?label=Test&style=for-the-badge&logo=github
 [docker-build-badge]: https://img.shields.io/docker/cloud/build/micnncim/stardust?logo=docker&style=for-the-badge
-[release-badge]: https://img.shields.io/github/v/release/micnncim/stardust?style=for-the-badge
+[release-badge]: https://img.shields.io/github/v/release/micnncim/stardust?style=for-the-badge&logo=github
 [license-badge]: https://img.shields.io/github/license/micnncim/stardust?style=for-the-badge
