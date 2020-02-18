@@ -2,6 +2,7 @@
 
 [![actions-workflow-test][actions-workflow-test-badge]][actions-workflow-test]
 [![docker-build][docker-build-badge]][docker-build]
+[![pkg.go.dev][pkg.go.dev-badge]][pkg.go.dev]
 [![release][release-badge]][release]
 [![license][license-badge]][license]
 
@@ -90,11 +91,17 @@ The supported report platforms are below.
 <!-- badge links -->
 
 [actions-workflow-test]: https://github.com/micnncim/stardust/actions?query=workflow%3ATest
-[docker-build]: https://hub.docker.com/r/micnncim/stardust
-[release]: https://github.com/micnncim/stardust/releases
-[license]: LICENSE
-
 [actions-workflow-test-badge]: https://img.shields.io/github/workflow/status/micnncim/stardust/Test?label=Test&style=for-the-badge&logo=github
+
+[docker-build]: https://hub.docker.com/r/micnncim/stardust
 [docker-build-badge]: https://img.shields.io/docker/cloud/build/micnncim/stardust?logo=docker&style=for-the-badge
+
+[pkg.go.dev]: https://pkg.go.dev/github.com/micnncim/stardust?tab=overview
+[pkg.go.dev-badge]: https://img.shields.io/badge/pkg.go.dev-reference-blue?style=for-the-badge&logo=go
+
+[release]: https://github.com/micnncim/stardust/releases
 [release-badge]: https://img.shields.io/github/v/release/micnncim/stardust?style=for-the-badge&logo=github
+
+[license]: LICENSE
 [license-badge]: https://img.shields.io/github/license/micnncim/stardust?style=for-the-badge
+
