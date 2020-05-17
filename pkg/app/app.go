@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"sync"
 	"time"
 
 	"go.uber.org/zap"
@@ -37,13 +38,20 @@ func (a *App) Run(ctx context.Context) error {
 		return nil
 	}
 
+	wg := &sync.WaitGroup{}
+
 	for _, r := range a.reporters {
-		go func(r reporter.Reporter) {
+		r := r
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
 			if err := r.Report(ctx, repos); err != nil {
 				a.logger.Error("report failed", zap.Error(err))
 			}
-		}(r)
+		}()
 	}
+
+	wg.Wait()
 
 	return nil
 }

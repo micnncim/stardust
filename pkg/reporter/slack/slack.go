@@ -25,15 +25,23 @@ const (
 var maxAttachments = 100
 
 type Client struct {
-	client    slackClientInterface
-	channelID string
-	logger    *zap.Logger
+	client  slackClientInterface
+	channel string
+	logger  *zap.Logger
 }
 
 var _ reporter.Reporter = (*Client)(nil)
 
+type Option func(*Client)
+
+func WithLogger(l *zap.Logger) Option {
+	return func(c *Client) {
+		c.logger = l.Named("slack")
+	}
+}
+
 type slackClientInterface interface {
-	PostAttachmentsMessage(ctx context.Context, channelID string, attachments ...slack.Attachment) error
+	PostAttachmentsMessage(ctx context.Context, channel string, attachments ...slack.Attachment) error
 }
 
 type slackClient struct {
@@ -42,22 +50,29 @@ type slackClient struct {
 
 var _ slackClientInterface = (*slackClient)(nil)
 
-func NewClient(token, channelID string, logger *zap.Logger) (reporter.Reporter, error) {
+func NewClient(token, channel string, opts ...Option) (reporter.Reporter, error) {
 	if token == "" {
 		return nil, errors.New("missing slack access token")
 	}
-	if channelID == "" {
+	if channel == "" {
 		return nil, errors.New("missing slack channel id")
 	}
 
-	return &Client{
-		client:    &slackClient{client: slack.New(token)},
-		channelID: channelID,
-		logger:    logger.Named("slack"),
-	}, nil
+	c := &Client{
+		client:  &slackClient{client: slack.New(token)},
+		channel: channel,
+	}
+
+	for _, opt := range opts {
+		opt(c)
+	}
+
+	return c, nil
 }
 
 func (c *Client) Report(ctx context.Context, repos []*github.Repo) error {
+	c.logger.Info("started sending message")
+
 	repoSum := len(repos)
 	var count int // the number of messages already sent
 	for {
@@ -77,7 +92,7 @@ func (c *Client) Report(ctx context.Context, repos []*github.Repo) error {
 			attachments = append(attachments, makeSlackAttachment(title, repo))
 		}
 
-		if err := c.client.PostAttachmentsMessage(ctx, c.channelID, attachments...); err != nil {
+		if err := c.client.PostAttachmentsMessage(ctx, c.channel, attachments...); err != nil {
 			c.logger.Error("failed to send message", zap.Error(err))
 			return err
 		}
@@ -90,8 +105,8 @@ func (c *Client) Report(ctx context.Context, repos []*github.Repo) error {
 	return nil
 }
 
-func (s *slackClient) PostAttachmentsMessage(ctx context.Context, channelID string, attachments ...slack.Attachment) error {
-	if _, _, err := s.client.PostMessageContext(ctx, channelID, slack.MsgOptionAttachments(attachments...)); err != nil {
+func (s *slackClient) PostAttachmentsMessage(ctx context.Context, channel string, attachments ...slack.Attachment) error {
+	if _, _, err := s.client.PostMessageContext(ctx, channel, slack.MsgOptionAttachments(attachments...)); err != nil {
 		return err
 	}
 	return nil

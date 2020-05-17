@@ -10,9 +10,9 @@ type Config struct {
 	GitHubToken    string `envconfig:"GITHUB_TOKEN"`
 	GitHubUsername string `envconfig:"GITHUB_USERNAME"`
 
-	EnableSlack    bool   `envconfig:"ENABLE_SLACK"`
-	SlackToken     string `envconfig:"SLACK_TOKEN"`
-	SlackChannelID string `envconfig:"SLACK_CHANNEL_ID"`
+	SlackEnabled bool   `envconfig:"SLACK_ENABLED"`
+	SlackToken   string `envconfig:"SLACK_TOKEN"`
+	SlackChannel string `envconfig:"SLACK_CHANNEL"`
 
 	LogLevel string `envconfig:"LOG_LEVEL" default:"info"`
 
@@ -21,7 +21,7 @@ type Config struct {
 
 func New() (*Config, error) {
 	c := &Config{}
-	err := envconfig.Process("", c)
+	err := envconfig.Process("stardust", c)
 	if err != nil {
 		return nil, err
 	}
