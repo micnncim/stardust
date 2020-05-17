@@ -12,6 +12,8 @@ Report a summary that tell you what GitHub repositories you recently have starre
 
 For example, you can get a report that tells you what repositories you have starred in the week.
 
+It would be better execute stardust as a cron job so that stardust reports regularly.
+
 ## Report Platforms
 
 The supported report platforms are below.
