@@ -7,7 +7,7 @@ import (
 	"sort"
 	"time"
 
-	"github.com/google/go-github/v27/github"
+	"github.com/google/go-github/v31/github"
 	"go.uber.org/zap"
 	"golang.org/x/oauth2"
 )
@@ -17,7 +17,13 @@ type Client struct {
 	logger *zap.Logger
 }
 
-func NewClient(token string, logger *zap.Logger) (*Client, error) {
+type Option func(*Client)
+
+func WithLogger(l *zap.Logger) Option {
+	return func(c *Client) { c.logger = l.Named("github") }
+}
+
+func NewClient(token string, opts ...Option) (*Client, error) {
 	if token == "" {
 		return nil, errors.New("missing github access token")
 	}
@@ -27,10 +33,15 @@ func NewClient(token string, logger *zap.Logger) (*Client, error) {
 	)
 	tc := oauth2.NewClient(context.Background(), ts)
 
-	return &Client{
+	c := &Client{
 		client: github.NewClient(tc),
-		logger: logger.Named("github"),
-	}, nil
+	}
+
+	for _, opt := range opts {
+		opt(c)
+	}
+
+	return c, nil
 }
 
 type Repo struct {
@@ -50,7 +61,7 @@ func (c *Client) ListStarredRepos(ctx context.Context, username string, from tim
 	c.logger.Info("started fetching starred repositories", zap.String("username", username))
 
 	var srepos []*github.StarredRepository
-	opt := github.ListOptions{PerPage: 50}
+	opt := github.ListOptions{PerPage: 100}
 
 	for {
 		repos, resp, err := c.client.Activity.ListStarred(ctx, username, &github.ActivityListStarredOptions{
@@ -80,11 +91,11 @@ func (c *Client) ListStarredRepos(ctx context.Context, username string, from tim
 		}
 		repo := &Repo{
 			Name:          srepo.Repository.GetName(),
-			Owner:         srepo.Repository.Owner.GetLogin(),
+			Owner:         srepo.Repository.GetOwner().GetLogin(),
 			URL:           srepo.Repository.GetHTMLURL(),
 			Description:   srepo.Repository.GetDescription(),
-			OwnerImageURL: srepo.Repository.Owner.GetAvatarURL(),
-			StarredAt:     srepo.StarredAt.Time,
+			OwnerImageURL: srepo.Repository.GetOwner().GetAvatarURL(),
+			StarredAt:     srepo.GetStarredAt().Time,
 		}
 		repos = append(repos, repo)
 		c.logger.Info("fetched repository",
